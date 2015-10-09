@@ -8,10 +8,10 @@
 #'@return Bar plot pdf illustrating distinct SISPA sample profiles.
 #'@import ggplot2
 #'@examples
-#'g <- 50 ## number of genes
-#'s <- 50 ## number of samples
-#'## sample data matrix with values ranging from 1 to 50
-#'expr <- matrix(sample.int(50, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:s, sep="") , paste("s", 1:g, sep="")))
+#'g <- 10 ## number of genes
+#'s <- 30 ## number of samples
+#'## sample data matrix with values ranging from 1 to 10
+#'expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:g, sep="") , paste("s", 1:s, sep="")))
 #'## genes of interest
 #'genes <- list(set1=paste("g", 1:3, sep=""))
 #'## Estimates GSVA enrichment zscores.
