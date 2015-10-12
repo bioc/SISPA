@@ -1,3 +1,8 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{SISPA}
+-->
+
 <center> <h4>SISPA: Method for Sample Integrated Set Profile Analysis</h4> </center>
 ===========================================================================================================
 <center> <h5>Bhakti Dwivedi, Ph.D and Jeanne Kowalski, Ph.D </h5></center>
