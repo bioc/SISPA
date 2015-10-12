@@ -21,7 +21,6 @@ SISPA: Method for Sample Integrated Gene Set Analysis
 Sample Integrated Gene Set Analysis (SISPA) is a method designed to define sample groups with similar gene set enrichment profiles. The user specifies a gene list of interest and sample by gene molecular data (expression, methylation, variant, or copy change data) to obtain gene set enrichment scores by each sample. The score statistics is rank ordered by the desired profile (e.g., upregulated or downregulated) for samples. A change point model is then applied to the sample scores to identify groups of samples that show similar gene set profile patterns. Samples are ranked by desired profile activity score and grouped by samples with and without profile activity. Figure 1 shows the schematic representation of the SISPA method overview.
 }
 \examples{
-\dontrun{
 g <- 10 ## number of genes
 s <- 30 ## number of samples
 ## sample data matrix with values ranging from 1 to 10
@@ -29,6 +28,5 @@ expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimna
 ## genes of interest
 genes <- list(set1=paste("g", 1:3, sep=""))
 SISPA(expr,genes)
-}
 }
 
