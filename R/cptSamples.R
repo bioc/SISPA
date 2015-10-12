@@ -122,7 +122,7 @@ cptSamples <- function (x,dir,cpt_data,cpt_method,cpt_max){
     x <- sort(x,FALSE)
     y <- sort(y,TRUE)
     
-    cptplot <- plot(x, type='p', lty=3, lwd=1, main="", xlab="Gene Index", ylab=LABEL, cex=1.5, pch=1, xlim=c(0,length(x)))
+    cptplot <- plot(x, type='p', lty=3, lwd=1, main="", xlab="Samples", ylab=LABEL, cex=1.5, pch=1, xlim=c(0,length(x)))
     
     for(i in 1:length(y)) {
       if(i==1) {
