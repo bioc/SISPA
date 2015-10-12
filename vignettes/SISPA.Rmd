@@ -1,3 +1,7 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{replace me with the vignette title}
+-->
 
 <center> <h4>SISPA: Method for Sample Integrated Set Profile Analysis</h4> </center>
 ===========================================================================================================
@@ -7,7 +11,8 @@
 ###Introduction
 Sample Integrated Gene Set Analysis (SISPA) is a method designed to define sample groups with similar gene set enrichment profiles. The user specifies a gene list of interest and sample by gene molecular data (expression, methylation, variant, or copy change data) to obtain gene set enrichment scores by each sample. The score statistics is rank ordered by the desired profile (e.g., upregulated or downregulated) for samples. A change point model is then applied to the sample scores to identify groups of samples that show similar gene set profile patterns. Samples are ranked by desired profile activity score and grouped by samples with and without profile activity. Figure 1 shows the schematic representation of the SISPA method overview.
 
-![sispa_overview.png](/Users/bhaktidwivedi/Documents/R-code_GitHub/R_packages/SISPA_0.99.1/inst/extdata/sispa_overview.png)
+
+![sispa_overview.png](sispa_overview.png)
 <center> <h6>Figure 1: SISPA method overview</h6></center>
 
 ###1. Data preparation
@@ -15,10 +20,7 @@ Here, we will consider an example RNA-seq expression data set to illustrate the 
 
 ```{r, message=F, warning=F}
 library("SISPA")
-setwd("~/Documents/R-code_GitHub/R_packages/SISPA_0.99.1/inst/extdata/")
 load("SISPA_data.Rda")
-data(expression_data)
-data(gene_list)
 ```
 
 We also need to load the following additional libraries:
