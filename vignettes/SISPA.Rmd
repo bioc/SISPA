@@ -1,6 +1,6 @@
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{SISPA}
+%\VignetteIndexEntry{replace me with the vignette title}
 -->
 
 <center> <h4>SISPA: Method for Sample Integrated Set Profile Analysis</h4> </center>

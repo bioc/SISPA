@@ -28,11 +28,11 @@ This function assigns samples identified in the first changepoint with the activ
 }
 \examples{
 g <- 10 ## number of genes
-s <- 30 ## number of samples
+s <- 60 ## number of samples
 ## sample data matrix with values ranging from 1 to 10
 expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:g, sep="") , paste("s", 1:s, sep="")))
 ## genes of interest
-genes <- list(set1=paste("g", 1:3, sep=""))
+genes <- list(set1=paste("g", 1:6, sep=""))
 ## Estimates GSVA enrichment zscores.
 gsva_results <- callGSVA(expr,genes)
 cptSamples(gsva_results,dir="up",cpt_data="var",cpt_method="BinSeg",cpt_max=60)

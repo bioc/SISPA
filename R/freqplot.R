@@ -8,17 +8,12 @@
 #'@return Bar plot pdf illustrating distribution of samples
 #'@import plyr
 #'@examples
-#'g <- 10 ## number of genes
-#'s <- 30 ## number of samples
-#'## sample data matrix with values ranging from 1 to 10
-#'expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:g, sep="") , paste("s", 1:s, sep="")))
-#'## genes of interest
-#'genes <- list(set1=paste("g", 1:3, sep=""))
-#'## Estimates GSVA enrichment zscores.
-#'gsva_results <- callGSVA(expr,genes)
-#'cpt_on_samples <- cptSamples(gsva_results,dir="up",cpt_data="var",cpt_method="BinSeg",cpt_max=60)
-#'## Plot number of samples by sample groups
-#'freqplot(cpt_on_samples)
+#'samples <- c("s1","s2","s3","s4","s5","s6","s7","s8","s9","s10")
+#'zscores <- c(3.83,2.70,2.67,2.31,1.70,1.25,-0.42,-1.01,-2.43,-3.37)
+#'changepoints <- c(1,1,1,2,2,3,3,NA,NA,NA)
+#'sample_groups <- c(1,1,1,0,0,0,0,0,0,0)
+#'my.data = data.frame(samples,zscores,changepoints,sample_groups)
+#'freqplot(my.data)
 #'@export
 freqplot = function(x){
     count_data <- count(x,"sample_groups")

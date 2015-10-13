@@ -15,11 +15,11 @@
 #'@import changepoint
 #'@examples
 #'g <- 10 ## number of genes
-#'s <- 30 ## number of samples
+#'s <- 60 ## number of samples
 #'## sample data matrix with values ranging from 1 to 10
 #'expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:g, sep="") , paste("s", 1:s, sep="")))
 #'## genes of interest
-#'genes <- list(set1=paste("g", 1:3, sep=""))
+#'genes <- list(set1=paste("g", 1:6, sep=""))
 #'## Estimates GSVA enrichment zscores.
 #'gsva_results <- callGSVA(expr,genes)
 #'cptSamples(gsva_results,dir="up",cpt_data="var",cpt_method="BinSeg",cpt_max=60)
@@ -49,14 +49,14 @@ cptSamples <- function (x,dir,cpt_data,cpt_method,cpt_max){
   # b : sorting order, ascending (FALSE) or descending (TRUE)
   perDiffcpt = function(x,cpt_data,cpt_method,cpt_max){
     max <- length(x)
-    if(max >= cpt_max){
+    if(max > cpt_max){
       if(cpt_data == "mean"){
         changepoints <- cpt.mean(x,method=cpt_method,Q=cpt_max)
       } else{
         changepoints <- cpt.var(x,method=cpt_method,Q=cpt_max)
       }
     }
-    if(max < cpt_max){
+    if(max <= cpt_max){
       if(cpt_data == "mean"){
         changepoints <- cpt.mean(x,method=cpt_method,Q=5)
       } else{
@@ -164,40 +164,42 @@ cptSamples <- function (x,dir,cpt_data,cpt_method,cpt_max){
     }
     #check for the number of changepoints identified
     if(length(cpts)<1){
-      stop("No changepoints identified in the data set!")
-    }else{  
+      warning("No changepoints identified in the data set!")
+      cpt_out=NULL
+    }else{
       #add estimated changepoint locations to the data
       changepoints <- cptAdd(st_rmv_na_sort,cpts)
-    }
-    #append changepoints to the original data frame
-    cpt_out <- data.frame(st_rmv_na_sort,changepoints)
-    if(dir == "up"){
-      all_cutoffs <- cptLocate_all(cpt_out,cpts,2)
-    }else{
-      all_cutoffs <- cptLocate_all(cpt_out,cpts,3)
-    }
-    cpt_out_sort <- sortData(cpt_out,ncol(cpt_out)-1,'FALSE' )
+   
+      #append changepoints to the original data frame
+      cpt_out <- data.frame(st_rmv_na_sort,changepoints)
+      if(dir == "up"){
+        all_cutoffs <- cptLocate_all(cpt_out,cpts,2)
+      }else{
+        all_cutoffs <- cptLocate_all(cpt_out,cpts,3)
+      }
+      cpt_out_sort <- sortData(cpt_out,ncol(cpt_out)-1,'FALSE' )
   
-    #plot all changepoints identified
-    if(dir == "up"){
-      cptsPlot(cpt_out_sort$zscore,all_cutoffs,Y_LABEL)
-    }else{
-      cptsPlot(cpt_out_sort$NegOneValue_zscore,all_cutoffs,Y_LABEL)
-    }
+      #plot all changepoints identified
+      if(dir == "up"){
+        cptsPlot(cpt_out_sort$zscore,all_cutoffs,Y_LABEL)
+      }else{
+        cptsPlot(cpt_out_sort$NegOneValue_zscore,all_cutoffs,Y_LABEL)
+      }
   
-    #generate the file with all changepoints
-    #format the data file for reading usability
-    #any changepoint other than 1 is designated as '0'
-    #plot changepoints within the data identified
-    cpt_out$sample_groups <- cpt_out$changepoints
-    cpt_out [, ncol(cpt_out) ][ cpt_out [ ,ncol(cpt_out) ] >1 ] <- "0"
-    cpt_out [, ncol(cpt_out)-1 ][ cpt_out [ ,ncol(cpt_out)-1 ] == 1000 ] <- "NA"
-    if(dir == "up"){
-      #don't remove anything
-    }else{
-      cpt_out <- cpt_out[,-c(3)]
+      #generate the file with all changepoints
+      #format the data file for reading usability
+      #any changepoint other than 1 is designated as '0'
+      #plot changepoints within the data identified
+      cpt_out$sample_groups <- cpt_out$changepoints
+      cpt_out [, ncol(cpt_out) ][ cpt_out [ ,ncol(cpt_out) ] >1 ] <- "0"
+      cpt_out [, ncol(cpt_out)-1 ][ cpt_out [ ,ncol(cpt_out)-1 ] == 1000 ] <- "NA"
+      if(dir == "up"){
+        #don't remove anything
+      }else{
+        cpt_out <- cpt_out[,-c(3)]
+      }
     }
-  
+    
     return(cpt_out)
 }
 

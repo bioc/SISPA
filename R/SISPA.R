@@ -18,11 +18,11 @@
 #'@include freqplot.R
 #'@examples
 #'g <- 10 ## number of genes
-#'s <- 30 ## number of samples
+#'s <- 60 ## number of samples
 #'## sample data matrix with values ranging from 1 to 10
 #'expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:g, sep="") , paste("s", 1:s, sep="")))
 #'## genes of interest
-#'genes <- list(set1=paste("g", 1:3, sep=""))
+#'genes <- list(set1=paste("g", 1:6, sep=""))
 #'SISPA(expr,genes)
 #'@export
 SISPA = function(x,y){
@@ -34,18 +34,23 @@ SISPA = function(x,y){
     ##pdf(file="changepoints_all.pdf",height=6,width=6)
     cpt_on_samples <- cptSamples(gsva_results,dir="up",cpt_data="var",cpt_method="BinSeg",cpt_max=60)
     ##dev.off()
-    write.table(cpt_on_samples,file="changepoints_all.csv",row.names=FALSE,sep=",")
+    ##write.table(cpt_on_samples,file="changepoints_all.csv",row.names=FALSE,sep=",")
 
 #sample profile distribution
-    #waterfall plot
-    ##pdf(file="waterfallplot.pdf",height=6,width=6)
-    wfplot <- waterfallplot(cpt_on_samples)
-    ##print(wfplot)
-    ##dev.off()
-    #barplot
-    ##pdf(file="freqplot.pdf",height=6,width=6)
-    fqplot <- freqplot(cpt_on_samples)
-    ##print()
-    ##dev.off()
-
+    if(is.null(cpt_on_samples)){
+      warning("No changepoints identified in the data set!")
+      return (0)
+    }else{
+      #waterfall plot
+      ##pdf(file="waterfallplot.pdf",height=6,width=6)
+      wfplot <- waterfallplot(cpt_on_samples)
+      ##print(wfplot)
+      ##dev.off()
+      #barplot
+      ##pdf(file="freqplot.pdf",height=6,width=6)
+      fqplot <- freqplot(cpt_on_samples)
+      ##print()
+      ##dev.off()
+      return(1)
+    }
 }
