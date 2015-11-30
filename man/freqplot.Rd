@@ -7,7 +7,7 @@
 freqplot(x)
 }
 \arguments{
-\item{x}{: A data frame containing samples as rows followed by zscores and estimated changepoints to be plotted.}
+\item{x}{A data frame containing samples as rows followed by zscores and estimated changepoints to be plotted.}
 }
 \value{
 Bar plot pdf illustrating distribution of samples

@@ -1,11 +1,28 @@
 Version 0.99.1: Original
-Version 0.99.2: Updated version
-		Update: Example ERROR fixed, generates ERROR message when no change points are identified!
-Version 0.99.3: Updated version
-		Update: Example ERROR fixed, generates ERROR message when no change points are identified!
-Version 0.99.4: Updated version
-		Update: Example ERROR fixed, generates ERROR message when no change points are identified!
 
-Bhakti Dwivedi Ph.D. and Jeanne Kowalski Ph.D.
+Version 0.99.2: 
+              Bugfix:
+                    - Example ERROR fixed, generates ERROR message when no change points are identified.
+                    
+Version 0.99.3: 
+              Bugfix:
+                    - Example ERROR fixed, generates ERROR message when no change points are identified.
+
+Version 0.99.4: 
+              Bugfix:
+                    - Example ERROR fixed, generates ERROR message when no change points are identified.
+Version 1.1.0
+	      First Release version
+
+Version 1.1.1:
+              New Features:
+		                - For more than 3 genes, standard zscore is computed instead of GSVA enrichment scores
+		                - For sample size less than 3, zscore can not be computed, program generates an error
+		                - SISPA can now run on a single data type or any combination of two numeric data types
+		                - changepoint R method options as input parameters
+		                - implemented ggplot to create barplot in the freqplot function
+		                - Updated vignettes as pdf file to perform 1D and 2D SISPA analysis
+
+Bhakti Dwivedi and Jeanne Kowalski
 The Winship Cancer Institute, Emory University
 https://bbisr.winship.emory.edu/

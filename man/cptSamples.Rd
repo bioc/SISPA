@@ -4,18 +4,16 @@
 \alias{cptSamples}
 \title{Sample profile identifier analysis}
 \usage{
-cptSamples(x, dir, cpt_data, cpt_method, cpt_max)
+cptSamples(x, cpt_data, cpt_method, cpt_max)
 }
 \arguments{
-\item{x}{: A matrix or data frame of sample GSVA enrichment zscores within which you wish to find a changepoint.}
+\item{x}{A matrix or data frame of sample GSVA enrichment zscores within which you wish to find a changepoint.}
 
-\item{dir}{: A flag to specify gene profile. If dir="up" then samples with increased zscores are identified. If dir="down" then samples with decreased zscores are identified. Default is "up".}
+\item{cpt_data}{Identify changepoints for data using variance (cpt.var) or mean (cpt.mean). Default is cpt.var.}
 
-\item{cpt_data}{: Identify changepoints for data using variance (cpt.var) or mean (cpt.mean). Default is cpt.var.}
+\item{cpt_method}{Choice of single or multiple changepoint model. Default is "BinSeg".}
 
-\item{cpt_method}{: Choice of single or multiple changepoint model. Default is "BinSeg".}
-
-\item{cpt_max}{:  The maximum number of changepoints  to search for using "BinSeg" method. Default is 60.}
+\item{cpt_max}{The maximum number of changepoints  to search for using "BinSeg" method. Default is 60.}
 }
 \value{
 The input data frame with added sample identifiers and estimated changepoints. A plot showing the changepoint locations estimated on the data
@@ -30,12 +28,14 @@ This function assigns samples identified in the first changepoint with the activ
 g <- 10 ## number of genes
 s <- 60 ## number of samples
 ## sample data matrix with values ranging from 1 to 10
-expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:g, sep="") , paste("s", 1:s, sep="")))
+rnames <- paste("g", 1:g, sep="")
+cnames <- paste("s", 1:s, sep="")
+expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(rnames, cnames))
 ## genes of interest
-genes <- list(set1=paste("g", 1:6, sep=""))
+genes <- data.frame(paste("g", 1:6, sep=""))
 ## Estimates GSVA enrichment zscores.
 gsva_results <- callGSVA(expr,genes)
-cptSamples(gsva_results,dir="up",cpt_data="var",cpt_method="BinSeg",cpt_max=60)
+cptSamples(gsva_results,cpt_data="var",cpt_method="BinSeg",cpt_max=60)
 }
 \seealso{
 changepoint

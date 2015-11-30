@@ -7,9 +7,9 @@
 callGSVA(x,y)
 }
 \arguments{
-\item{x}{: A data matrix of gene or probe expression values where rows corrospond to genes and columns corrospond to samples}
+\item{x}{A data frame or matrix of gene or probe expression values where rows corrospond to genes and columns corrospond to samples}
 
-\item{y}{: Gene sets provided as a list object.}
+\item{y}{A list of genes as data frame or vector}
 }
 \value{
 A gene-set by sample matrix of GSVA enrichment zscores.
@@ -24,9 +24,11 @@ This function uses "zscore" gene-set enrichment method in the estimation of gene
 g <- 10 ## number of genes
 s <- 30 ## number of samples
 ## sample data matrix with values ranging from 1 to 10
-expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:g, sep="") , paste("s", 1:s, sep="")))
+rnames <- paste("g", 1:g, sep="")
+cnames <- paste("s", 1:s, sep="")
+expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(rnames, cnames))
 ## genes of interest
-genes <- list(set1=paste("g", 1:3, sep=""))
+genes <- data.frame(paste("g", 1:6, sep=""))
 ## Estimates GSVA enrichment zscores.
 callGSVA(expr,genes)
 }

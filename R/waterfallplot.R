@@ -3,7 +3,7 @@
 #'@title A plotting function for SISPA sample identifiers
 #'@description Given a sample changepoint data frame, will plot all samples zscores from that data.
 #'@usage waterfallplot(x)
-#'@param x : A data frame containing samples as rows followed by zscores and estimated changepoints to be plotted.
+#'@param x A data frame containing samples as rows followed by zscores and estimated sample_groups to be plotted.
 #'@details This function expects the output from cptSamples function of SISPA package, and highlights the sample profile of interest in the changepoint 1 with orange filled bars.
 #'@return Bar plot pdf illustrating distinct SISPA sample profiles.
 #'@import ggplot2
@@ -19,20 +19,19 @@ waterfallplot = function(x){
     if(missing(x)){
       stop("input data is missing!")
   }
-    x <- x[,-ncol(x)]
     colnames(x)[1] <- "samples"
+    colnames(x)[ncol(x)] <- "sample_groups"
     #create a start column
     x[,ncol(x)+1] <- 0
     #define global variable
     #select and modify the data for readability
     read_data_sort <- x[ order(x[,2], decreasing=FALSE), ]
-    read_data_sort$changepoints[is.na(read_data_sort$changepoints)] <- 1000
     #arrange the columns
-    arrange_read_data_sort <- data.frame(read_data_sort[,1],read_data_sort[,4],read_data_sort[,2],read_data_sort[,3])
-    colnames(arrange_read_data_sort)<-c("samples","Start","End","changepoints")
+    arrange_read_data_sort <- data.frame(read_data_sort[,1],read_data_sort[,5],read_data_sort[,2],read_data_sort[,4])
+    colnames(arrange_read_data_sort)<-c("samples","Start","End","sample_groups")
     arrange_read_data_sort[,1] <- factor(arrange_read_data_sort[,1], levels=arrange_read_data_sort[,1])
     arrange_read_data_sort$id <- seq_along(arrange_read_data_sort$End)
-    arrange_read_data_sort$type <- ifelse(arrange_read_data_sort$changepoints==1, "cpt1", "other")
+    arrange_read_data_sort$type <- ifelse(arrange_read_data_sort$sample_groups==1, "grp1", "other")
     arrange_read_data_sort <- arrange_read_data_sort[,c(5,1,6,2,3)]
     #generate the waterfall plot
     wf <- ggplot(arrange_read_data_sort, aes(colour=type,samples,fill=type)) + scale_fill_manual(values=c("#FF8000","white")) + scale_colour_manual(values=c("#FF8000","grey")) + geom_rect(aes(x=samples,xmin=id-0.35,xmax=id+0.35,ymin=End,ymax=Start))  

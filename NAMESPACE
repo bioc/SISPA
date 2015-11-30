@@ -2,8 +2,10 @@
 
 export(SISPA)
 export(callGSVA)
+export(callZSCORE)
 export(cptSamples)
 export(freqplot)
+export(sortData)
 export(waterfallplot)
 import(GSVA)
 import(changepoint)

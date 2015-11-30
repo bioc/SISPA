@@ -4,12 +4,28 @@
 \alias{SISPA}
 \title{SISPA}
 \usage{
-SISPA(x,y)
+SISPA(feature=1,f1.df,f1.genes,f1.profile,f2.df,f2.genes,f2.profile,cpt_data="var",cpt_method="BinSeg",cpt_max=60)
 }
 \arguments{
-\item{x}{: A data matrix of gene or probe expression values where rows corrospond to genes and columns corrospond to samples}
+\item{feature}{Number of input feature or data types}
 
-\item{y}{: Gene sets provided as a list object.}
+\item{f1.df}{A data matrix of first feature (e.g., gene or probe expression values) where rows corrospond to genes and columns corrospond to samples}
+
+\item{f1.genes}{Gene sets for first feature provided as a vector or data frame}
+
+\item{f1.profile}{A flag to specify gene profile. If gene.profile="up" then samples with increased zscores are identified. If gene.profile="down" then samples with decreased zscores are identified. Default is "up".}
+
+\item{f2.df}{A data matrix of second feature (e.g., gene variant change) where rows corrospond to genes and columns corrospond to samples}
+
+\item{f2.genes}{Gene sets for second feature provided as a vector or data frame}
+
+\item{f2.profile}{A flag to specify gene profile. If gene.profile="up" then samples with increased zscores are identified. If gene.profile="down" then samples with decreased zscores are identified. Default is "up".}
+
+\item{cpt_data}{Identify changepoints for data using variance (cpt.var) or mean (cpt.mean). Default is cpt.var.}
+
+\item{cpt_method}{Choice of single or multiple changepoint model. Default is "BinSeg". See changepoint R package for details}
+
+\item{cpt_max}{The maximum number of changepoints  to search for using "BinSeg" method. Default is 60.}
 }
 \value{
 The input molecular data frame with added sample identifiers and estimated changepoints. A plot showing the changepoint locations estimated on the data. Bar plots pdf illustrating distinct distribution of samples with and without profile activity
@@ -24,9 +40,11 @@ Sample Integrated Gene Set Analysis (SISPA) is a method designed to define sampl
 g <- 10 ## number of genes
 s <- 60 ## number of samples
 ## sample data matrix with values ranging from 1 to 10
-expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(paste("g", 1:g, sep="") , paste("s", 1:s, sep="")))
+rnames <- paste("g", 1:g, sep="")
+cnames <- paste("s", 1:s, sep="")
+expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(rnames, cnames))
 ## genes of interest
-genes <- list(set1=paste("g", 1:6, sep=""))
-SISPA(expr,genes)
+genes <- data.frame(paste("g", 1:6, sep=""))
+SISPA(feature=1,f1.df=expr,f1.genes=genes,f1.profile="up")
 }
 

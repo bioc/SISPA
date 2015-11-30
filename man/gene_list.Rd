@@ -8,10 +8,10 @@
 data(gene_list)
 }
 \value{
-list of 8 genes(probes)
+list of 8 genes
 }
 \description{
-A list of 9 genes for GSVA analysis
+A list of 8 genes for GSVA analysis
 }
 \details{
 This is data to be included in my package

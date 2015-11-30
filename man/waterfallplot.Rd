@@ -7,7 +7,7 @@
 waterfallplot(x)
 }
 \arguments{
-\item{x}{: A data frame containing samples as rows followed by zscores and estimated changepoints to be plotted.}
+\item{x}{A data frame containing samples as rows followed by zscores and estimated sample_groups to be plotted.}
 }
 \value{
 Bar plot pdf illustrating distinct SISPA sample profiles.
