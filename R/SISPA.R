@@ -68,7 +68,7 @@ for(f in 1:feature){
     }else{
       #decreased zscore values are desirable
       #Thus multiplied by -1 to obtain the desired outcome
-      scores$NegOneValue_zscore <- as.numeric(as.character(scores$zscore)) * -1
+      scores$NegOneValue_zscore <- scores$zscore * -1
       scores <- scores[,-c(2)]
       colnames(scores)[2] <- "zscore"
     }
