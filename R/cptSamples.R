@@ -12,7 +12,7 @@
 #'@import plyr
 #'@import data.table
 #'@include sortData.R
-#'@include callZSCORE.R
+#'@include callGSVA.R
 #'@examples
 #'g <- 10 ## number of genes
 #'s <- 60 ## number of samples
@@ -32,24 +32,21 @@ cptSamples <- function (x,cpt_data,cpt_method,cpt_max){
   # i : numeric column index of the data frame to sort it by
   # b : sorting order, ascending (FALSE) or descending (TRUE)
   perDiffcpt = function(x,cpt_data,cpt_method,cpt_max){
-    max <- length(x)
+   max <- length(x)/2
     if (cpt_method == "AMOC") {
       if(cpt_data == "mean"){
         changepoints <- cpt.mean(x,method=cpt_method,Q=1)
-      }
-      else if(cpt_data == "var"){
+      }else if(cpt_data == "var"){
         changepoints <- cpt.var(x,method=cpt_method,Q=1)
       }
-    }
-    else if (cpt_method == "PELT" || cpt_method == "SegNeigh" || cpt_method == "BinSeg") {
+    }else if (cpt_method == "PELT" || cpt_method == "SegNeigh" || cpt_method == "BinSeg") {
       if(max > cpt_max){
         if(cpt_data == "mean"){
           changepoints <- cpt.mean(x,method=cpt_method,Q=cpt_max)
         } else{
           changepoints <- cpt.var(x,method=cpt_method,Q=cpt_max)
         }
-      }
-      if(max <= cpt_max){
+      }else if(max <= cpt_max){
         if(cpt_data == "mean"){
           changepoints <- cpt.mean(x,method=cpt_method,Q=5)
         } else{

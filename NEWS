@@ -23,11 +23,15 @@ Version 1.1.1:
 		                - changepoint R method options as input parameters
 		                - implemented ggplot to create barplot in the freqplot function
 		                - Updated vignettes as pdf file to perform 1D and 2D SISPA analysis
+			       - SISPA.R numeric ERROR fixed
 
-Version 1.1.2: 
-              Bugfix:
-                    - SISPA.R numeric ERROR fixed
+Version 1.1.2:
+              New Features:
+			       - cptSamples.R changepoint ERROR fixed
 
+Version 1.1.3:
+              New Features:
+			       - cptSamples.R Example ERROR fixed
 
 
 Bhakti Dwivedi and Jeanne Kowalski
