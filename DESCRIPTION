@@ -1,7 +1,7 @@
 Package: SISPA
 Type: Package
 Title: SISPA: Method for Sample Integrated Set Profile Analysis
-Version: 1.2.1
+Version: 1.2.2
 Date: 2015-10-22
 Author: Bhakti Dwivedi & Jeanne Kowalski
 Maintainer: Bhakti Dwivedi <bhakti.dwivedi@emory.edu>
