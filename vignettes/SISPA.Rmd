@@ -1,7 +1,8 @@
 ---
 Tile: SISPA
 output:
-  html_document
+  html_document:
+    keep_md: true
 ---
 <!--
 %\VignetteEngine{rmarkdown::render}
@@ -60,7 +61,7 @@ SISPA two-feature (two data type) analysis expects two input data sets or data t
   
 ```{r, message=F, warning=F, fig.width = 6, fig.height = 4.5, fig.cap="Identified changepoints on the underlying data zscores"}
 sampleScores <- SISPA(feature=2,f1.df=ExpressionSet,f1.profile="up",
-                      f2.df=VariantSet,f2.profile="up")
+                                f2.df=VariantSet,f2.profile="up")
 head(sampleScores)
 ```
 
