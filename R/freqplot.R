@@ -17,6 +17,7 @@
 #'freqplot(my.data)
 #'@export
 freqplot = function(x){
+    sample_groups <- value <- NULL
     count_data <- count(x,vars="sample_groups")
     count_data$sample_groups[count_data$sample_groups=="1"] <- "Active Profile"
     count_data$sample_groups[count_data$sample_groups=="0"] <- "Inactive Profile"

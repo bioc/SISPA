@@ -22,7 +22,7 @@ callZSCORE = function(x) {
     }
     #compute row zscores
     zscores_results <- data.frame(colnames(x),scale(t(x)),row.names=NULL)
-    colnames(zscores_results)[1] <- "samples"
+    colnames(zscores_results)[1] <- "sample"
     #compute the added zscores, as applicable and rename the column names
     if(ncol(zscores_results)==2){
       colnames(zscores_results)[2] <- "zscore"

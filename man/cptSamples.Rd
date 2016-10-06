@@ -9,7 +9,7 @@ cptSamples(x, cpt_data, cpt_method, cpt_max)
 \arguments{
 \item{x}{A matrix or data frame of sample GSVA enrichment zscores within which you wish to find a changepoint.}
 
-\item{cpt_data}{Identify changepoints for data using variance (cpt.var) or mean (cpt.mean). Default is cpt.var.}
+\item{cpt_data}{Identify changepoints for data using variance (cpt.var), mean (cpt.mean) or both (cpt.meanvar). Default is cpt.var.}
 
 \item{cpt_method}{Choice of single or multiple changepoint model. Default is "BinSeg".}
 
@@ -32,7 +32,7 @@ rnames <- paste("g", 1:g, sep="")
 cnames <- paste("s", 1:s, sep="")
 expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(rnames, cnames))
 ## genes of interest
-genes <- data.frame(paste("g", 1:6, sep=""))
+genes <- paste("g", 1:g, sep="")
 ## Estimates GSVA enrichment zscores.
 gsva_results <- callGSVA(expr,genes)
 cptSamples(gsva_results,cpt_data="var",cpt_method="BinSeg",cpt_max=60)

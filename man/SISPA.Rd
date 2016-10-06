@@ -4,24 +4,20 @@
 \alias{SISPA}
 \title{SISPA}
 \usage{
-SISPA(feature=1,f1.df,f1.genes,f1.profile,f2.df,f2.genes,f2.profile,cpt_data="var",cpt_method="BinSeg",cpt_max=60)
+SISPA(feature=1,f1.df,f1.profile,f2.df,f2.profile,cpt_data="var",cpt_method="BinSeg",cpt_max=60)
 }
 \arguments{
 \item{feature}{Number of input feature or data types}
 
 \item{f1.df}{A data matrix of first feature (e.g., gene or probe expression values) where rows corrospond to genes and columns corrospond to samples}
 
-\item{f1.genes}{Gene sets for first feature provided as a vector or data frame}
-
 \item{f1.profile}{A flag to specify gene profile. If gene.profile="up" then samples with increased zscores are identified. If gene.profile="down" then samples with decreased zscores are identified. Default is "up".}
 
 \item{f2.df}{A data matrix of second feature (e.g., gene variant change) where rows corrospond to genes and columns corrospond to samples}
 
-\item{f2.genes}{Gene sets for second feature provided as a vector or data frame}
-
 \item{f2.profile}{A flag to specify gene profile. If gene.profile="up" then samples with increased zscores are identified. If gene.profile="down" then samples with decreased zscores are identified. Default is "up".}
 
-\item{cpt_data}{Identify changepoints for data using variance (cpt.var) or mean (cpt.mean). Default is cpt.var.}
+\item{cpt_data}{Identify changepoints for data using variance (cpt.var), mean (cpt.mean), or both (cpt.meanvar). Default is cpt.var.}
 
 \item{cpt_method}{Choice of single or multiple changepoint model. Default is "BinSeg". See changepoint R package for details}
 
@@ -43,8 +39,6 @@ s <- 60 ## number of samples
 rnames <- paste("g", 1:g, sep="")
 cnames <- paste("s", 1:s, sep="")
 expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(rnames, cnames))
-## genes of interest
-genes <- data.frame(paste("g", 1:6, sep=""))
-SISPA(feature=1,f1.df=expr,f1.genes=genes,f1.profile="up")
+SISPA(feature=1,f1.df=expr,f1.profile="up")
 }
 

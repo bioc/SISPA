@@ -28,7 +28,7 @@ rnames <- paste("g", 1:g, sep="")
 cnames <- paste("s", 1:s, sep="")
 expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(rnames, cnames))
 ## genes of interest
-genes <- data.frame(paste("g", 1:6, sep=""))
+genes <- paste("g", 1:g, sep="")
 ## Estimates GSVA enrichment zscores.
 callGSVA(expr,genes)
 }

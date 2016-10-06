@@ -14,9 +14,9 @@ Affiliations:
 Installation:
     To install, run the following command from R console:
         ```{r}
-          source("https://bioconductor.org/biocLite.R")
+          source("http://bioconductor.org/biocLite.R")
           biocLite("SISPA")
         ```
 Getting Started:
-    See ./vignettes/SISPA.pdf
+    See ./vignettes/SISPA.pdf or ./vignettes/SISPA.html
 

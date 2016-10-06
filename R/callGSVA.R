@@ -16,7 +16,7 @@
 #'cnames <- paste("s", 1:s, sep="")
 #'expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(rnames, cnames))
 #'## genes of interest
-#'genes <- data.frame(paste("g", 1:6, sep=""))
+#'genes <- paste("g", 1:g, sep="")
 #'## Estimates GSVA enrichment zscores.
 #'callGSVA(expr,genes)
 #'@seealso GSVA
@@ -28,9 +28,8 @@ callGSVA = function(x,y) {
     if(missing(y)){
     stop("input gene set missing!")
     }
-    dataset <- as.matrix(x)
-    genes <- list(set1=y[,])
-    gsva.results <- gsva(dataset, genes, method="zscore", rnaseq=FALSE,verbose=FALSE,parallel.sz=2)
+    genes <- list(set1=y)
+    gsva.results <- gsva(x, genes, method="zscore", rnaseq=FALSE, verbose=FALSE, parallel.sz=2)
     tr_gsva.results <- t(gsva.results)
     #label column names
     tr_result_zscore <- cbind(samples = rownames(tr_gsva.results), tr_gsva.results)

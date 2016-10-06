@@ -18,7 +18,9 @@
 waterfallplot = function(x){
     if(missing(x)){
       stop("input data is missing!")
-  }
+    }
+    type <- samples <- End <- Start <- NULL # Setting the variables to NULL first
+    
     colnames(x)[1] <- "samples"
     colnames(x)[ncol(x)] <- "sample_groups"
     #create a start column
@@ -46,7 +48,7 @@ waterfallplot = function(x){
     wf <- wf + theme(panel.grid.minor = element_line(colour = "NA"))
     wf <- wf + theme(axis.ticks.x = element_blank())
     wf <- wf + theme(axis.ticks.y=element_line(colour="black"))
-    wf <- wf + ylab("SISPA Profile Score")
+    wf <- wf + ylab("SISPA Profile ZScores")
     wf <- wf + xlab("Samples\n")
     return(wf)
 }

@@ -1,7 +1,6 @@
 ---
 output: html_document
 ---
-
 <!--
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{SISPA:Method for Sample Integrated Set Profile Analysis}
@@ -13,53 +12,57 @@ SISPA: Method for Sample Integrated Set Profile Analysis
 Winship Cancer Institute, Emory University, Atlanta, 30322, USA  
   
 ###Introduction  
-Sample Integrated Gene Set Analysis (SISPA) is a method designed to define sample groups with similar gene set enrichment profiles. The user specifies list of candidate genes and samples by molecular data (expression, methylation, variant, or copy change data) to obtain gene set enrichment scores by each sample. The enrichment scores for each sample are computed using the zscore method implemented in the GSVA R package[ref]. The score statistics is rank ordered by the desired profile (e.g., upregulated or downregulated) for each sample. A change point model is then applied to the sample scores to identify groups of samples that show similar gene set profile patterns. Samples are ranked by desired profile activity score and grouped by samples with and without profile activity. SISPA requires a minimum of 3 samples to compute gene set enrichment scores. If the number of input genes is less than 3, a standard zscore is computed for each gene instead of GSVA enrichment zscore. The individual zscores are added over the genes to estimate the sample enrichment score. Figure 1 shows the schematic representation of the SISPA method overview.   
+Sample Integrated Set Profile Analysis (SISPA) is a method designed to define sample groups using a defined gene set with similar, a priori defined molecular profile (Kowalski et al., 2016). SISPA can perform either a single- or two-feature analysis. We defined a feature as a specific data type (e.g., expression, methylation, variant, or copy change data) and profile is a genomic change of either increase (up) or decrease (down) within a feature. 
+
+Here the user specifies gene set by sample molecular data (expression, methylation, variant, or copy change data) and profile of interest to obtain gene set enrichment scores for each sample. The enrichment scores for each sample, overall genes, are computed using the zscore method implemented in the GSVA R package (Hanzelmann, Castelo, and Guinney 2013). When multiple data types are considered, a composite zscore is computed between features by adding or substracting individual zscores between features for each gene set depending on their corrosponding profile. The sample profile zscores are rank ordered by the desired change or profile. A change point model (Killick and Eckley 2014, Killick, Hayens, and Eckley 2015) is then applied to the sample zscores to identify groups of samples that show similar gene set profile. Users can select changes in mean (cpt.mean), variance (cpt.var) or both (cpt.meanvar) from the available methods (AMOC, PELT, SegNeigh, BinSeg) for changepoint identification in the data set using the default settings. Samples that satisfy the desired gene set profile are grouped into samples with profile activity, while samples that do not satisfy the profile of interest are grouped as samples without profile activity. 
+
+SISPA requires a minimum of 10 samples and one gene to compute sample profile zscores. If the number of input genes is less than 3, a standard zscore is computed for each gene instead of GSVA enrichment zscore, which is added across all genes. When multiple The individual zscores are added over the genes to estimate the sample enrichment score. Figure 1 shows the schematic representation of the SISPA method overview.   
   
 ![SISPA Overview](sispa_overview.png)
   
-The package incorporates two datasets: RNA-seq derived gene expression and variant change data from patients with mulitple myeloma. The datasets (ExpressionSet, VariantSet) on sample gene set (GeneSet, VariantGeneSet) are provided as a GeneSetCollection object called SISPA_data in the SISPA package in addition to any other data used in this vignette. These dataets can be loaded as follows:  
+The package incorporates two example datasets: RNA-seq derived gene expression and Exome-seq derived variant change data from patients with multiple myeloma (https://research.themmrf.org/). The datasets (ExpressionSet, VariantSet) are provided as a GeneSetCollection object called SISPA_data in the SISPA package. These datasets can be loaded as follows:  
   
 ```{r, message=F, warning=F}
 library("SISPA")
 load("SISPA_data.Rda")
+ExpressionSet[1:5,1:5]
 ```
   
+Input data set must be a data frame with rows representing genes (or other forms of gene ids) and columns representing samples. Please see example datasets (e.g., ExpressionSet, VariantSet) provided with the package.
 
-###SISPA: One Feature Analysis
-SISPA, one feature (od data type) analysis expects one input data set to estimate the profile on. The input data set consists of more than two samples with one more number of genes. Genes with constant values throughout the samples are discarded. Users can specify the expected sample profile pattern for the given feature using f1.profile. Samples with increased profile activity scores are obtained using profile "up", while samples with decreased profile activity scores are obtained using profile"down". Here, we illustrate the use of sample profile identification with increased profile activity using gene expression dataset. The function also generates plot to assess the distribution of zscores with the identfied changepoints across samples (Figure 2).  
+###SISPA: One-Feature Analysis
+SISPA one-feature (one data type) analysis expects one input data set or data type to identify sample groups on. The input data set consists of more than two samples with one more number of genes. Genes with zero variance across the samples are excluded from the analysis. An example of single-feature analysis could be identifying samples with increased or decreased expression profile within the defined gene set. Users can specify the expected sample profile change for the given data type or feature using 'f1.profile'. Samples with increased profile activity are obtained by specifying sample profile to "up", while samples with decreased profile activity scores are obtained by specifying sample profile to "down". Here, we illustrate the use of SISPA one-feature analysis using gene expression data set comprised of 6 genes and 125 patient samples to obtain samples with increased profile activity within the gene set. A changepoint plot is also generated, representing samples sorted from the smallest (least desirable) to largest (most desirable) profile scores by their identified changepoints according to those that satisfy the profile most (change point 1; above orange dotted line), next most (change point 2 or greater; above grey dotted lines) and so forth (Figure 2).  
   
   
 ```{r, message=F, warning=F, fig.width = 6, fig.height = 4.5, fig.cap="Identified changepoints on the underlying data zscores"}
-sampleScores <- SISPA(feature=1,f1.df=ExpressionSet,f1.genes=GeneSet,f1.profile="up")
+sampleScores <- SISPA(feature=1,f1.df=ExpressionSet,f1.profile="up")
 head(sampleScores)
 ```
 
-The waterfallplot and freqplot can be drawn for easy visualization of samples by their profile activity scores. Samples with profile activity are highlighted in orange, while samples without profile activity are highlighted in grey. Regardless of the user-selected sample profile pattern, samples with profile activity are the samples with the increased SISPA profile score or zscores.  
+Additional diagnostic plots can be generated for easy visualization of samples by their profile activity scores. Waterfall plot represents sample profile zscores sorted from the smallest to largest profile scores Samples with profile activity are shown with orange-filled bars, while samples without the profile activity are shown with grey-filled bars. Regardless of the sample profile (up or down), samples with profile activity are the samples with the increased SISPA profile scores.  
 
  
 ```{r, message=F, warning=F, fig.width = 4.5, fig.height = 3, fig.cap="Waterfall plot of zscores for samples with (orange) and without profile activity (grey)"}
 waterfallplot(sampleScores)
 ```
   
-  
+Frequency distribution of the number of samples identified with (orange) and without (grey) the profile activity.  
 ```{r, message=F, warning=F, fig.width = 4.5, fig.height = 3, fig.cap="Bar plot distribution of samples with (orange) and without profile activity"}
 freqplot(sampleScores)
 ```
   
 
-
-###SISPA: Two Feature Analysis
-SISPA two feature (or data type) analysis expects the same number of samples (columns) across the input data sets, the number of genes or the number of gene variants (rows) may vary. Genes with constant values throughout the samples within a data type are discarded. Users can specify the expected sample profile pattern by each feature using f1.profile and f2.profile. Samples with increased profile activity scores are obtained using profile"up", while samples with decreased profile activity scores are obtained using profile"down". Here, we illustrate the use of sample profile identification with increased profile activity using both the gene expression and gene variant data.    
+###SISPA: Two-Feature Analysis
+SISPA two-feature (two data type) analysis expects two input data sets or data types to identify sample groups. Each input data set consists of more than two samples with one more number of genes. The two data sets should have the same number of samples (columns); however, the number of genes or the number of gene variants (rows) may vary. Genes with zero variance across the samples within each data type are excluded from the analysis. An example of two-feature analysis could be identifying samples with increased gene expression and increased copy change within the defined gene sets. Users can specify the expected sample profile change by each feature using f1.profile and f2.profile. Samples with increased profile activity are obtained by specifying sample profile to "up", while samples with decreased profile activity scores are obtained by specifying sample profile to "down". Profile changes are input for each data type separately. Here, we illustrate the use of SISPA two-feature analysis using gene expression data set comprised of 6 genes and 125 patient samples and variant change data set comprised of 301 gene variants on the same 125 patient samples to obtain samples with both increased gene expression and increased variant changes.    
+  
   
 ```{r, message=F, warning=F, fig.width = 6, fig.height = 4.5, fig.cap="Identified changepoints on the underlying data zscores"}
-sampleScores <- SISPA(feature=2,f1.df=ExpressionSet,f1.genes=GeneSet,f1.profile="up",
-                      f2.df=VariantSet,f2.genes=VariantGeneSet,f2.profile="up")
+sampleScores <- SISPA(feature=2,f1.df=ExpressionSet,f1.profile="up",
+                      f2.df=VariantSet,f2.profile="up")
 head(sampleScores)
 ```
 
-The waterfallplot and freqplot can be drawn for easy visualization of samples by their profile activity scores. Samples with profile activity are highlighted in orange, while samples without profile activity are highlighted in grey. Regardless of the user-selected sample profile pattern, samples with profile activity are the samples with the increased SISPA profile score or zscores.
-
-
+As with one-feature analysis, waterfall plot and frequency bar plot can be generated for easy visualization of sample groups.
 ```{r, message=F, warning=F, fig.width = 4.5, fig.height = 3, fig.cap="Waterfall plot of zscores for samples with (orange) and without profile activity (grey)"}
 waterfallplot(sampleScores)
 ```

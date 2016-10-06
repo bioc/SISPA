@@ -3,7 +3,7 @@
 #'@title Sample profile identifier analysis
 #'@description Generate sample profile identifiers from sample zscores using change point model.
 #'@param x A matrix or data frame of sample GSVA enrichment zscores within which you wish to find a changepoint.
-#'@param cpt_data Identify changepoints for data using variance (cpt.var) or mean (cpt.mean). Default is cpt.var.
+#'@param cpt_data Identify changepoints for data using variance (cpt.var), mean (cpt.mean) or both (cpt.meanvar). Default is cpt.var.
 #'@param cpt_method Choice of single or multiple changepoint model. Default is "BinSeg".
 #'@param cpt_max The maximum number of changepoints  to search for using "BinSeg" method. Default is 60.
 #'@details This function assigns samples identified in the first changepoint with the active profile ("1") while the remaining samples are grouped under inactive profile ("0").
@@ -21,7 +21,7 @@
 #'cnames <- paste("s", 1:s, sep="")
 #'expr <- matrix(sample.int(10, size = g*s, replace = TRUE), nrow=g, ncol=s, dimnames=list(rnames, cnames))
 #'## genes of interest
-#'genes <- data.frame(paste("g", 1:6, sep=""))
+#'genes <- paste("g", 1:g, sep="")
 #'## Estimates GSVA enrichment zscores.
 #'gsva_results <- callGSVA(expr,genes)
 #'cptSamples(gsva_results,cpt_data="var",cpt_method="BinSeg",cpt_max=60)
@@ -38,22 +38,27 @@ cptSamples <- function (x,cpt_data,cpt_method,cpt_max){
         changepoints <- cpt.mean(x,method=cpt_method,Q=1)
       }else if(cpt_data == "var"){
         changepoints <- cpt.var(x,method=cpt_method,Q=1)
+      }else{
+        changepoints <- cpt.meanvar(x,method=cpt_method,Q=1)
       }
     }else if (cpt_method == "PELT" || cpt_method == "SegNeigh" || cpt_method == "BinSeg") {
       if(max > cpt_max){
         if(cpt_data == "mean"){
           changepoints <- cpt.mean(x,method=cpt_method,Q=cpt_max)
-        } else{
+        } else if (cpt_data == "var"){
           changepoints <- cpt.var(x,method=cpt_method,Q=cpt_max)
+        } else{
+            changepoints <- cpt.meanvar(x,method=cpt_method,Q=cpt_max)
         }
       }else if(max <= cpt_max){
         if(cpt_data == "mean"){
           changepoints <- cpt.mean(x,method=cpt_method,Q=5)
-        } else{
+        } else if (cpt_data == "var"){
           changepoints <- cpt.var(x,method=cpt_method,Q=5)
+        }else{
+          changepoints <- cpt.meanvar(x,method=cpt_method,Q=5)
         }
       }
-      
     }
     return ( cpts(changepoints) )
   }
@@ -118,16 +123,16 @@ cptSamples <- function (x,cpt_data,cpt_method,cpt_max){
     
     for(i in 1:length(y)) {
       if(i==1) {
-        abline(h=y[i],lty=2,col='red')
-        text(y[i],y[i],y[i], cex=1.0, pos=4, col="red")
+        abline(h=y[i],lty=2,col='orange')
+        text(y[i],y[i],y[i], cex=1.0, pos=4, col="orange")
       }else{
         ## display in terms of sample group profiles
         if(y[i]<0){
-          abline(h=y[i],lty=2,col='blue')
-          text(y[i],y[i],y[i], cex=1.0, pos=4, col="blue")
+          abline(h=y[i],lty=2,col='grey')
+          text(y[i],y[i],y[i], cex=1.0, pos=4, col="grey")
         } else{
-          abline(h=y[i],lty=2,col='green3')
-          text(y[i],y[i],y[i], cex=1.0, pos=4, col="green3")
+          abline(h=y[i],lty=2,col='grey')
+          text(y[i],y[i],y[i], cex=1.0, pos=4, col="grey")
         }
       }
     }
