@@ -1,7 +1,7 @@
 Package: SISPA
 Type: Package
 Title: SISPA: Method for Sample Integrated Set Profile Analysis
-Version: 1.2.0
+Version: 1.3.0
 Date: 2016-09-29
 Author: Bhakti Dwivedi and Jeanne Kowalski
 Maintainer: Bhakti Dwivedi <bhakti.dwivedi@emory.edu>
@@ -27,5 +27,5 @@ Collate:
 biocViews: GeneSetEnrichment,GenomeWideAssociation
 Suggests: knitr
 VignetteBuilder: knitr
-PackageStatus: Deprecated
+
 
