@@ -55,7 +55,7 @@ SISPA = function(feature=1,f1.df,f1.profile,f2.df=NULL,f2.profile=NULL,cpt_data=
 for(f in 1:feature){
   
     dat <- get(paste("f",f,".df",sep=""))
-    genelist <- as.character(dat[,1])
+    genelist <- rownames(dat[1])
     sampleid <- colnames(dat[,-c(1)])
     originalX <- as.matrix(dat[,-c(1)])
     rownames(originalX) <- genelist

@@ -29,7 +29,7 @@ callGSVA = function(x,y) {
     stop("input gene set missing!")
     }
     genes <- list(set1=y)
-    gsva.results <- gsva(x, genes, method="zscore", rnaseq=FALSE, verbose=FALSE, parallel.sz=2)
+    gsva.results <- gsva(x, genes, method="zscore",verbose=FALSE, parallel.sz=2)
     tr_gsva.results <- t(gsva.results)
     #label column names
     tr_result_zscore <- cbind(samples = rownames(tr_gsva.results), tr_gsva.results)
