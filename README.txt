@@ -12,9 +12,12 @@ Affiliations:
     (2) Department of Biostatistics and Bioinformatics, Rollins School of Public Health, Emory University, Atlanta, GA 30322, USA
 
 Installation:
-    To install, run the following command from R console:
-          source("http://bioconductor.org/biocLite.R")
-          biocLite("SISPA")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version='devel')
+BiocManager::install("SISPA")
+
+
 Getting Started:
     See ./vignettes/SISPA.pdf or ./vignettes/SISPA.html
 
