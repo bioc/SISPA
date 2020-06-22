@@ -1,10 +1,4 @@
----
-Tile: SISPA
-output:
-  html_document:
-    keep_md: true
----
-!--
+<!--
 %\VignetteEngine{rmarkdown::render}
 %\VignetteIndexEntry{SISPA:Method for Sample Integrated Set Profile Analysis}
 -->
@@ -28,7 +22,7 @@ The package incorporates two example datasets: RNA-seq derived gene expression a
 
 ```r
 library("SISPA")
-load("data.rda")
+load("SISPA_data.Rda")
 ExpressionSet[1:5,1:5]
 ```
 
@@ -52,7 +46,7 @@ SISPA one-feature (one data type) analysis expects one input data set or data ty
 sampleScores <- SISPA(feature=1,f1.df=ExpressionSet,f1.profile="up")
 ```
 
-![Identified changepoints on the underlying data zscores](SISPA_files/figure-html/unnamed-chunk-2-1.png)
+![Identified changepoints on the underlying data zscores](SISPA_files/figure-html/unnamed-chunk-2-1.png) 
 
 ```r
 head(sampleScores)
@@ -76,16 +70,16 @@ Additional diagnostic plots can be generated for easy visualization of samples b
 waterfallplot(sampleScores)
 ```
 
-![Waterfall plot of zscores for samples with (orange) and without profile activity (grey)](SISPA_files/figure-html/unnamed-chunk-3-1.png)
-
+![Waterfall plot of zscores for samples with (orange) and without profile activity (grey)](SISPA_files/figure-html/unnamed-chunk-3-1.png) 
+  
 Frequency distribution of the number of samples identified with (orange) and without (grey) the profile activity.  
 
 ```r
 freqplot(sampleScores)
 ```
 
-![Bar plot distribution of samples with (orange) and without profile activity](SISPA_files/figure-html/unnamed-chunk-4-1.png)
-
+![Bar plot distribution of samples with (orange) and without profile activity](SISPA_files/figure-html/unnamed-chunk-4-1.png) 
+  
 
 ###SISPA: Two-Feature Analysis
 SISPA two-feature (two data type) analysis expects two input data sets or data types to identify sample groups. Each input data set consists of more than two samples with one more number of genes. The two data sets should have the same number of samples (columns); however, the number of genes or the number of gene variants (rows) may vary. Genes with zero variance across the samples within each data type are excluded from the analysis. An example of two-feature analysis could be identifying samples with increased gene expression and increased copy change within the defined gene sets. Users can specify the expected sample profile change by each feature using f1.profile and f2.profile. Samples with increased profile activity are obtained by specifying sample profile to "up", while samples with decreased profile activity scores are obtained by specifying sample profile to "down". Profile changes are input for each data type separately. Here, we illustrate the use of SISPA two-feature analysis using gene expression data set comprised of 6 genes and 125 patient samples and variant change data set comprised of 301 gene variants on the same 125 patient samples to obtain samples with both increased gene expression and increased variant changes.    
@@ -97,7 +91,7 @@ sampleScores <- SISPA(feature=2,f1.df=ExpressionSet,f1.profile="up",
                                 f2.df=VariantSet,f2.profile="up")
 ```
 
-![Identified changepoints on the underlying data zscores](SISPA_files/figure-html/unnamed-chunk-5-1.png)
+![Identified changepoints on the underlying data zscores](SISPA_files/figure-html/unnamed-chunk-5-1.png) 
 
 ```r
 head(sampleScores)
@@ -119,11 +113,12 @@ As with one-feature analysis, waterfall plot and frequency bar plot can be gener
 waterfallplot(sampleScores)
 ```
 
-![Waterfall plot of zscores for samples with (orange) and without profile activity (grey)](SISPA_files/figure-html/unnamed-chunk-6-1.png)
-
+![Waterfall plot of zscores for samples with (orange) and without profile activity (grey)](SISPA_files/figure-html/unnamed-chunk-6-1.png) 
+  
 
 ```r
 freqplot(sampleScores)
 ```
 
-![Bar plot distribution of samples with (orange) and without profile activity](SISPA_files/figure-html/unnamed-chunk-7-1.png)
+![Bar plot distribution of samples with (orange) and without profile activity](SISPA_files/figure-html/unnamed-chunk-7-1.png) 
+
