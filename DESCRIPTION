@@ -1,0 +1,33 @@
+Package: SISPA
+Type: Package
+Title: SISPA: Method for Sample Integrated Set Profile Analysis
+Version: 1.19.1
+Date: 2020-03-22
+Author: Bhakti Dwivedi and Jeanne Kowalski
+Maintainer: Bhakti Dwivedi <bhakti.dwivedi@emory.edu>
+Description: Sample Integrated Set Profile Analysis (SISPA) is a method designed to define sample groups with similar gene set enrichment profiles.
+Depends: R (>= 3.5),genefilter,GSVA,changepoint
+Imports: data.table, plyr, ggplot2
+License: GPL-2
+LazyData: true
+Collate: 
+    'freqplot.R'
+    'waterfallplot.R'
+    'callGSVA.R'
+    'sortData.R'
+    'cptSamples.R'
+    'callZSCORE.R'
+    'filterVars.R'
+    'SISPA.R'
+    'data.R'
+biocViews: GeneSetEnrichment,GenomeWideAssociation
+Suggests: knitr
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2020-04-28 01:31:17 UTC; biocbuild
+git_url: https://git.bioconductor.org/packages/SISPA
+git_branch: master
+git_last_commit: 1a0b709
+git_last_commit_date: 2020-04-27
+Date/Publication: 2020-04-27
+RoxygenNote: 7.1.0
