@@ -1,7 +1,7 @@
 Package: SISPA
 Type: Package
 Title: SISPA: Method for Sample Integrated Set Profile Analysis
-Version: 1.31.0
+Version: 1.31.1
 Date: 2020-03-22
 Author: Bhakti Dwivedi and Jeanne Kowalski
 Maintainer: Bhakti Dwivedi <bhakti.dwivedi@emory.edu>
@@ -20,6 +20,7 @@ Collate:
     'filterVars.R'
     'SISPA.R'
     'data.R'
+    'zzz.R'
 biocViews: GeneSetEnrichment,GenomeWideAssociation
 Suggests: knitr
 VignetteBuilder: knitr
@@ -31,3 +32,4 @@ git_last_commit: 1a0b709
 git_last_commit_date: 2020-04-27
 Date/Publication: 2020-04-27
 RoxygenNote: 7.1.0
+PackageStatus: Deprecated
